@@ -1,13 +1,14 @@
 package com.pucp.lab5gtics.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 //Completar
 @Entity
 @Table(name = "employees")
-public class Employee {
+public class Employee implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "employee_id")
