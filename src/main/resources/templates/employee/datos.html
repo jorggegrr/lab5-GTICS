@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/base :: head(title='Nuevo usuario')">
+</head>
+<body>
+    <form>
+        <div class="form-group">
+            <label >Nombre</label>
+            <input class="form-control" type="text" name="firstName">
+        </div>
+        <div class="form-group">
+            <label >Apellido</label>
+            <input class="form-control" type="text" name="lastName">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" name="email">
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Departamento</label>
+            <select class="form-control" id="exampleFormControlSelect1" name="departmentId">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlSelect2">Trabajo</label>
+            <select multiple class="form-control" id="exampleFormControlSelect2" name="JobId">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label >Salario</label>
+            <input class="form-control" type="text">
+        </div>
+
+        <button type="button" class="btn btn-primary" href="#">Cancelar</button>
+        <button type="submit" class="btn btn-outline-dark">Guardar</button>
+    </form>
+</body>
+</html>
