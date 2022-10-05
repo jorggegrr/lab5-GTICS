@@ -10,12 +10,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+import java.util.Optional;
+
 @Controller
 public class EmployeeController {
 
     @Autowired
     EmployeeRepository employeeRepository;
-
     @Autowired
     DepartmentRepository departmentRepository;
     @Autowired
@@ -23,16 +25,11 @@ public class EmployeeController {
 
     @GetMapping({"empleado/lista", "empleado"})
     public String listEmployee(Model model, @RequestParam(name = "search",required = false) String search, @RequestParam(name = "order", required = false) Integer order, RedirectAttributes attributes){
-        if (search == null){
-            model.addAttribute("listaEmpleados",employeeRepository.findAll());
-        }else{
-            model.addAttribute("listaEmpleados",employeeRepository.findAll());
-            model.addAttribute("busqueda",search);
-        }
 
 
         return "XXXXXX";
     }
+
 
     //Buscar Empleado
     public String searchEmployee(Model model, @RequestParam(name = "search",required = false) String search, @RequestParam(name = "order", required = false) Integer order, RedirectAttributes attributes){
@@ -41,11 +38,26 @@ public class EmployeeController {
     }
 
 
+    public List<Employee> getListaDepartamento() {
+        List<Employee> listaJefes = employeeRepository.findAll();
+        Employee e = new Employee();
+        e.setDepartmentId(0);
+        listaJefes.add(0, e);
+        return listaJefes;
+    }
+
     //Editar Empleado
-    //@...Mapping("")
-    public String informEmployee(  ) {
-        //        COMPLETAR
-        return "XXXXXX";
+    @GetMapping("/edit")
+    public String informEmployee(Model model, @RequestParam("id") int id) {
+        Optional<Employee> optional = employeeRepository.findById(id);
+
+        if (optional.isPresent()) {
+            model.addAttribute("employee", optional.get());
+            model.addAttribute("listaJefes", getListaDepartamento());
+            return "employee/editFrm";
+        } else {
+            return "redirect:/employee";
+        }
     }
 
     //Guardar Empleado
@@ -57,11 +69,9 @@ public class EmployeeController {
 
     //Nuevo Empleado
     @GetMapping("employee/nuevo")
-    public String newEmployee(@ModelAttribute("employees") Employee employee,
+    public String newEmployee(@ModelAttribute("employee") Employee employee,
                                 Model model) {
-        model.addAttribute("empleado",employee);
-        model.addAttribute("listaDepartamento",departmentRepository.findAll());
-        model.addAttribute("listaTrabajo",jobRepository.findAll());
+
         return "employee/datos";
     }
 }

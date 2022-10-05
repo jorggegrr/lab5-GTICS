@@ -3,6 +3,9 @@ package com.pucp.lab5gtics.entity;
 
 import javax.persistence.*;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 //Completar
 @Entity
 @Table(name = "departments")

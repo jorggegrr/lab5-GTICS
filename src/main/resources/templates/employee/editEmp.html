@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/base :: head(title='Nuevo usuario')">
+</head>
+<body>
+<form>
+    <div class="form-group">
+        <label >Nombre</label>
+        <input class="form-control" type="text" name="firstName">
+    </div>
+    <div class="form-group">
+        <label >Apellido</label>
+        <input class="form-control" type="text" name="lastName">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" name="email">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Jefe</label>
+        <select class="form-select" name="departmentId" id="departmentId">
+            <option th:each="jefe : ${listaJefes}"
+                    th:selected="${employee.manager != null and (jefe.id == employee.manager.id)}"
+                    th:text="|${jefe.firstname} ${jefe.lastname==null?'':jefe.lastname}|"
+                    th:value="${jefe.id}"></option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Jefe</label>
+        <select class="form-select" name="JobId" id="JobId">
+            <option th:each="jefe : ${listaJefes}"
+                    th:selected="${employee.manager != null and (jefe.id == employee.manager.id)}"
+                    th:text="|${jefe.firstname} ${jefe.lastname==null?'':jefe.lastname}|"
+                    th:value="${jefe.id}"></option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label >Salario</label>
+        <input class="form-control" type="text">
+    </div>
+
+    <button type="button" class="btn btn-primary" href="#">Cancelar</button>
+    <button type="submit" class="btn btn-outline-dark">Guardar</button>
+</form>
+</body>
+</html>
