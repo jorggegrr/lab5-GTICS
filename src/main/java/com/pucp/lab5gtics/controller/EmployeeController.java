@@ -15,6 +15,7 @@ public class EmployeeController {
 
     @Autowired
     EmployeeRepository employeeRepository;
+
     @Autowired
     DepartmentRepository departmentRepository;
     @Autowired
@@ -22,11 +23,16 @@ public class EmployeeController {
 
     @GetMapping({"empleado/lista", "empleado"})
     public String listEmployee(Model model, @RequestParam(name = "search",required = false) String search, @RequestParam(name = "order", required = false) Integer order, RedirectAttributes attributes){
+        if (search == null){
+            model.addAttribute("listaEmpleados",employeeRepository.findAll());
+        }else{
+            model.addAttribute("listaEmpleados",employeeRepository.findAll());
+            model.addAttribute("busqueda",search);
+        }
 
 
         return "XXXXXX";
     }
-
 
     //Buscar Empleado
     public String searchEmployee(Model model, @RequestParam(name = "search",required = false) String search, @RequestParam(name = "order", required = false) Integer order, RedirectAttributes attributes){
