@@ -75,9 +75,9 @@ public class EmployeeController {
 
     //Guardar Empleado
     @PostMapping("empleado/guardar")
-    public String saveEmployee(  ) {
-        //        COMPLETAR
-        return "XXXXXX";
+    public String saveEmployee( Employee employee) {
+        employeeRepository.save(employee);
+        return "redirect:/employee";
     }
 
     //Nuevo Empleado
