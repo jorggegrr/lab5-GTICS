@@ -19,21 +19,17 @@
         <div class="form-group">
             <label for="exampleFormControlSelect1">Departamento</label>
             <select class="form-control" id="exampleFormControlSelect1" name="departmentId">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+                <option>-Seleccionar-</option>
+                <option  th:each="departamento : ${listaDepartamento}" th:selected="${empleado.employeeId!=null?(empleado.departmentId==departamento.departmentId):false}"
+                         th:value="${departamento.departmentId}" th:text="${departamento.departmentName}"></option>
             </select>
         </div>
         <div class="form-group">
             <label for="exampleFormControlSelect2">Trabajo</label>
-            <select multiple class="form-control" id="exampleFormControlSelect2" name="JobId">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+            <select multiple class="form-control" id="exampleFormControlSelect2" name="jobId">
+                <option>Seleccionar</option>
+                <option  th:each="trabajo : ${listaTrabajo}" th:selected="${empleado.employeeId!=null?(empleado.jobId==trabajo.jobId):false}"
+                         th:value="${trabajo.jobId}" th:text="${trabajo.jobTitle}"></option>
             </select>
         </div>
         <div class="form-group">

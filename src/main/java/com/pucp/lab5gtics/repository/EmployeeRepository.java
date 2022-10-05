@@ -6,8 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
 //Completar
+
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee,Integer> {
 
@@ -15,4 +15,3 @@ public interface EmployeeRepository extends JpaRepository<Employee,Integer> {
             nativeQuery = true)
     List<Employee> buscarNombre(String nombre);
 
-}
