@@ -1,5 +1,7 @@
 package com.pucp.lab5gtics.controller;
 
+import com.pucp.lab5gtics.entity.Department;
+import com.pucp.lab5gtics.entity.Job;
 import com.pucp.lab5gtics.entity.Employee;
 import com.pucp.lab5gtics.repository.DepartmentRepository;
 import com.pucp.lab5gtics.repository.EmployeeRepository;
@@ -38,12 +40,22 @@ public class EmployeeController {
     }
 
 
-    public List<Employee> getListaDepartamento() {
-        List<Employee> listaJefes = employeeRepository.findAll();
-        Employee e = new Employee();
+    public List<Department> getListaDepartamento() {
+        List<Department> listaJefes = departmentRepository.findAll();
+        Department e = new Department();
         e.setDepartmentId(0);
+        e.setDepartmentName("--No tiene departamento--");
         listaJefes.add(0, e);
         return listaJefes;
+    }
+
+    public List<Job> getListaTrabajo() {
+        List<Job> ListaTrabajo = jobRepository.findAll();
+        Job e = new Job();
+        e.setJobId(null);
+        e.setJobTitle("--No tiene departamento--");
+        ListaTrabajo.add(0, e);
+        return ListaTrabajo;
     }
 
     //Editar Empleado
@@ -54,6 +66,7 @@ public class EmployeeController {
         if (optional.isPresent()) {
             model.addAttribute("employee", optional.get());
             model.addAttribute("listaJefes", getListaDepartamento());
+            model.addAttribute("listaTrabajo", getListaTrabajo());
             return "employee/editFrm";
         } else {
             return "redirect:/employee";
