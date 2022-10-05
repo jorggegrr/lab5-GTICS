@@ -27,17 +27,23 @@ public class EmployeeController {
 
     @GetMapping({"empleado/lista", "empleado"})
     public String listEmployee(Model model, @RequestParam(name = "search",required = false) String search, @RequestParam(name = "order", required = false) Integer order, RedirectAttributes attributes){
-
-
-        return "XXXXXX";
+        if (search == null){
+            if (order !=  null) {
+                switch (order) {
+                    case 1 -> model.addAttribute("listaEmpleados", employeeRepository.ordenDesc());
+                    case 2 -> model.addAttribute("listaEmpleados", employeeRepository.ordenAsc());
+                    default -> model.addAttribute("listaEmpleados", employeeRepository.findAll());
+                }
+            }else{
+                model.addAttribute("listaEmpleados", employeeRepository.ordenDesc());
+            }
+        }else{
+            model.addAttribute("listaEmpleados",employeeRepository.buscarNombre(search));
+            model.addAttribute("busqueda",search);
+        }
+        return "employee/list";
     }
 
-
-    //Buscar Empleado
-    public String searchEmployee(Model model, @RequestParam(name = "search",required = false) String search, @RequestParam(name = "order", required = false) Integer order, RedirectAttributes attributes){
-
-        return "XXXXXX";
-    }
 
 
     public List<Department> getListaDepartamento() {

@@ -11,7 +11,16 @@ import java.util.List;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee,Integer> {
 
-    @Query(value = "SELECT * FROM employees where first_name = ?1",
+    @Query(value = "SELECT * FROM employees where first_name like %?1%",
             nativeQuery = true)
     List<Employee> buscarNombre(String nombre);
+
+    @Query(value = "SELECT * FROM employees order by first_name desc",
+            nativeQuery = true)
+    List<Employee> ordenDesc();
+
+    @Query(value = "SELECT * FROM employees order by first_name asc",
+            nativeQuery = true)
+    List<Employee> ordenAsc();
+}
 
