@@ -51,9 +51,11 @@ public class EmployeeController {
 
     //Nuevo Empleado
     @GetMapping("employee/nuevo")
-    public String newEmployee(@ModelAttribute("employee") Employee employee,
+    public String newEmployee(@ModelAttribute("employees") Employee employee,
                                 Model model) {
-        model.addAttribute();
+        model.addAttribute("empleado",employee);
+        model.addAttribute("listaDepartamento",departmentRepository.findAll());
+        model.addAttribute("listaTrabajo",jobRepository.findAll());
         return "employee/datos";
     }
 }
