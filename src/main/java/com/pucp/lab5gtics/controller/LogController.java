@@ -20,25 +20,32 @@ public class LogController {
     EmployeeRepository employeeRepository;
 
     @GetMapping(value = {"/login"})
-    public String login( ) {
+    public String login() {
         return "login/login";
     }
 
+
+
+
     @GetMapping(value = "/redirecRol")
-    public String redirecRol(Authentication authentication, HttpSession session, RedirectAttributes redirectAttributes){
+    public String redirecRol(Authentication authentication, HttpSession session, RedirectAttributes redirectAttributes) {
 
-        String rol="";
+        String rol = "";
         List<GrantedAuthority> authorities = (List<GrantedAuthority>) authentication.getAuthorities();
-        for (GrantedAuthority grantedAuthority: authorities){
+        for (GrantedAuthority grantedAuthority : authorities) {
             System.out.println(grantedAuthority.getAuthority());
-            rol= grantedAuthority.getAuthority();
+            rol = grantedAuthority.getAuthority();
         }
+        /*
+        String username = authentication.getName();
+        Employee employee = employeeRepository.employeeCorreo(username);
+        System.out.println(employee.getEmployeeId() + " algo");
+        session.setAttribute("usuario", employee);
+        */
 
-        String username= authentication.getName();
-        Employee employee=employeeRepository.employeeCorreo(username);
-        System.out.println(employee.getEmployeeId()+" algo");
-        session.setAttribute("usuario",employee);
-
+        return "redirect:/empleado";
+    }
+        /*
         switch (rol){
             case "0" -> {
                 return "redirect:/usuario/listar";
@@ -52,6 +59,9 @@ public class LogController {
                 return "redirect:/login/login";
             }
 
-        }
-    }
+
+
+        }*/
+
+
 }

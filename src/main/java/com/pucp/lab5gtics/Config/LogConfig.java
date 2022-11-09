@@ -14,7 +14,6 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
-
 public class LogConfig extends WebSecurityConfigurerAdapter {
 
     @Override
@@ -22,14 +21,17 @@ public class LogConfig extends WebSecurityConfigurerAdapter {
         http.formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/procesarLog")
-                .usernameParameter("email")
+                .usernameParameter("correo")
+                .passwordParameter("contrasenia")
                 .defaultSuccessUrl("/redirecRol",true);
         http.authorizeRequests()
-                .antMatchers("/employee","/employee/**").hasAuthority("employee")
-                .antMatchers("/manager","/manager/**").hasAuthority("manager");
-        http.logout().logoutUrl("/logout")
+                .antMatchers("/empleado").hasAnyAuthority("employee","manager")
+                .antMatchers("/empleado/**").hasAuthority("manager");
+
+        http.logout().logoutSuccessUrl("/login")
                 .deleteCookies("JSESSIONID")
                 .invalidateHttpSession(true);
+
     }
 
     @Autowired
@@ -39,8 +41,8 @@ public class LogConfig extends WebSecurityConfigurerAdapter {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .passwordEncoder(new BCryptPasswordEncoder())
-                .usersByUsernameQuery("select email, password, permitido from employees where email = ?")
-                .authoritiesByUsernameQuery("select email, enabled FROM employees where email = ?  ");
+                .usersByUsernameQuery("select email, password, roles_idroles from employees where email = ?")
+                .authoritiesByUsernameQuery("select e.email, r.name from employees e inner join roles r on (e.roles_idroles=r.idroles) where e.email = ?; ");
     }
 
 }
