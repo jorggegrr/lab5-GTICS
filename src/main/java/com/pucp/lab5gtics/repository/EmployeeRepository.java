@@ -15,6 +15,7 @@ public interface EmployeeRepository extends JpaRepository<Employee,Integer> {
             nativeQuery = true)
     List<Employee> buscarNombre(String nombre);
 
+
     @Query(value="select * from employees where email= ?1 ;",nativeQuery = true)
     Employee employeeCorreo(String codigo);
 

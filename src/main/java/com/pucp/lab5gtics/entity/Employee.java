@@ -4,6 +4,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.Date;
 
 //Completar
 @Entity
@@ -30,10 +32,36 @@ public class Employee implements Serializable {
     private String phoneNumber;
     @Basic
     @Column(name = "hire_date")
-    private Timestamp hireDate;
+    private String hireDate;
+
+    public String getHireDate() {
+        return hireDate;
+    }
+
+    public void setHireDate(String hireDate) {
+        this.hireDate = hireDate;
+    }
+
     @Basic
     @Column(name = "job_id")
     private String jobId;
+
+    public String getJobId() {
+        return jobId;
+    }
+
+    public void setJobId(String jobId) {
+        this.jobId = jobId;
+    }
+
+    public Integer getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Integer departmentId) {
+        this.departmentId = departmentId;
+    }
+
     @Basic
     @Column(name = "salary")
     private BigDecimal salary;
@@ -98,21 +126,7 @@ public class Employee implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public Timestamp getHireDate() {
-        return hireDate;
-    }
 
-    public void setHireDate(Timestamp hireDate) {
-        this.hireDate = hireDate;
-    }
-
-    public String getJobId() {
-        return jobId;
-    }
-
-    public void setJobId(String jobId) {
-        this.jobId = jobId;
-    }
 
     public BigDecimal getSalary() {
         return salary;
@@ -138,13 +152,6 @@ public class Employee implements Serializable {
         this.managerId = managerId;
     }
 
-    public Integer getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(Integer departmentId) {
-        this.departmentId = departmentId;
-    }
 
     public Integer getEnabled() {
         return enabled;

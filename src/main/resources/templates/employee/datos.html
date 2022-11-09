@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/base :: head(title='Nuevo usuario')">
+<head th:replace="fragments/base :: head(title='Nuevo empleado')">
 </head>
 <body>
-    <form>
+
+    <form method="post" th:object="${empleado}" th:action="@{'/empleado/guardar'}">
+        <input th:field="*{employeeId}" type="hidden"/>
+        <input th:field="*{hireDate}" type="hidden">
         <div class="form-group">
             <label >Nombre</label>
-            <input class="form-control" type="text" name="firstName">
+            <input class="form-control" type="text"  th:field="*{firstName}">
         </div>
         <div class="form-group">
             <label >Apellido</label>
-            <input class="form-control" type="text" name="lastName">
+            <input class="form-control" type="text"  th:field="*{lastName}">
         </div>
         <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" name="email">
+            <input type="email" class="form-control" id="exampleInputEmail1" th:field="*{email}">
         </div>
         <div class="form-group">
             <label for="exampleFormControlSelect1">Departamento</label>
@@ -25,8 +28,8 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="exampleFormControlSelect2">Trabajo</label>
-            <select multiple class="form-control" id="exampleFormControlSelect2" name="jobId">
+            <label for="exampleFormControlSelect1">Trabajo</label>
+            <select  class="form-control" id="exampleFormControlSelect1" name="jobId">
                 <option>Seleccionar</option>
                 <option  th:each="trabajo : ${listaTrabajo}" th:selected="${empleado.employeeId!=null?(empleado.jobId==trabajo.jobId):false}"
                          th:value="${trabajo.jobId}" th:text="${trabajo.jobTitle}"></option>
@@ -34,10 +37,11 @@
         </div>
         <div class="form-group">
             <label >Salario</label>
-            <input class="form-control" type="text">
+            <input class="form-control" type="text" th:field="*{salary}">
         </div>
 
-        <button type="button" class="btn btn-primary" href="#">Cancelar</button>
+
+        <button type="button" class="btn btn-primary" th:href="@{'empleado/lista'}">Cancelar</button>
         <button type="submit" class="btn btn-outline-dark">Guardar</button>
     </form>
 </body>

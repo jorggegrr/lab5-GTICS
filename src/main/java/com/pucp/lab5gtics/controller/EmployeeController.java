@@ -1,8 +1,8 @@
 package com.pucp.lab5gtics.controller;
 
 import com.pucp.lab5gtics.entity.Department;
-import com.pucp.lab5gtics.entity.Job;
 import com.pucp.lab5gtics.entity.Employee;
+import com.pucp.lab5gtics.entity.Job;
 import com.pucp.lab5gtics.repository.DepartmentRepository;
 import com.pucp.lab5gtics.repository.EmployeeRepository;
 import com.pucp.lab5gtics.repository.JobRepository;
@@ -12,6 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +23,7 @@ public class EmployeeController {
 
     @Autowired
     EmployeeRepository employeeRepository;
+
     @Autowired
     DepartmentRepository departmentRepository;
     @Autowired
@@ -65,32 +69,48 @@ public class EmployeeController {
     }
 
     //Editar Empleado
-    @GetMapping("/edit")
-    public String informEmployee(Model model, @RequestParam("id") int id) {
+    @GetMapping("empleado/editar")
+    public String informEmployee(@ModelAttribute("employee") Employee employee,
+                                 Model model, @RequestParam("id") int id) {
         Optional<Employee> optional = employeeRepository.findById(id);
-
         if (optional.isPresent()) {
-            model.addAttribute("employee", optional.get());
-            model.addAttribute("listaJefes", getListaDepartamento());
-            model.addAttribute("listaTrabajo", getListaTrabajo());
-            return "employee/editFrm";
+            employee = optional.get();
+            model.addAttribute("empleado", employee);
+            model.addAttribute("listaDepartamento",getListaDepartamento());
+            model.addAttribute("listaTrabajo",getListaTrabajo());
+            return "employee/datos";
         } else {
-            return "redirect:/employee";
+            return "redirect:/empleado/lista";
         }
     }
 
     //Guardar Empleado
     @PostMapping("empleado/guardar")
-    public String saveEmployee( Employee employee) {
+    public String saveEmployee( @ModelAttribute("employee")  Employee employee,
+                                RedirectAttributes attr) {
+
+        if(employee.getEmployeeId()==0){
+            attr.addFlashAttribute("msg","Empleado registrado exitosamente");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+            Date date = new Date();
+            String strDate = formatter.format(date);
+            employee.setHireDate(strDate);
+        } else {
+
+            attr.addFlashAttribute("msg", "Empleado actualizado exitosamente");
+        }
+
         employeeRepository.save(employee);
-        return "redirect:/employee";
+        return "redirect:/empleado/lista";
     }
 
     //Nuevo Empleado
-    @GetMapping("employee/nuevo")
+    @GetMapping("empleado/nuevo")
     public String newEmployee(@ModelAttribute("employee") Employee employee,
                                 Model model) {
-
+        model.addAttribute("empleado",employee);
+        model.addAttribute("listaDepartamento",getListaDepartamento());
+        model.addAttribute("listaTrabajo",getListaTrabajo());
         return "employee/datos";
     }
 }

@@ -49,7 +49,7 @@ public class LogController {
             default -> {
                 String texto = "Credenciales invalidas";
                 redirectAttributes.addFlashAttribute("msgLogin",texto);
-                return "redirect:/login";
+                return "redirect:/login/login";
             }
 
         }
